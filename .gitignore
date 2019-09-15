@@ -1,0 +1,6 @@
+test/
+tmc/
+__pycache__/
+.tmc.json
+.tmc_test_results.json
+.available_points.json
