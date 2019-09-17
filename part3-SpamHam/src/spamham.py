@@ -1,4 +1,5 @@
 import os
+import math
 
 SMALL_NUMBER = 0.00001
 
@@ -58,9 +59,28 @@ class SpamHam:
         words = input().split()
         return self.evaluate(words)
 
+    def conditionals(self):
+        spamprob = {}
+        hamprob = {}
+        for word in self.spam:
+            spamprob[word] = self.spam[word]/75268
+        for word in self.ham:
+            hamprob[word] = self.ham[word]/290673
+        return spamprob, hamprob
+
     def evaluate(self, words):
         """
         :param words: Array of str
         :return: probability that the message is spam (float)
         """
-        # Implement me
+        spamprob, hamprob = self.conditionals()
+
+        logR = 0.0
+        for word in words:
+            try: 
+                logR += (math.log(spamprob[word]) - math.log(hamprob[word]))
+            except KeyError:
+                continue
+        R = math.exp(logR)
+
+        return R/(R+1)
